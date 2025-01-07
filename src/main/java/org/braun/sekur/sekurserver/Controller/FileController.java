@@ -29,7 +29,6 @@ public class FileController {
     
     @PostMapping(value = "/archive")
     public ResponseEntity<?> acceptArchive(@RequestHeader("apiKey") String apiKey,
-                                           @RequestParam String device,
                                            @RequestParam("file") MultipartFile file) throws IOException {
         
         if (apiKey == null)
@@ -38,7 +37,7 @@ public class FileController {
         if (!Objects.equals(argsExtractor.getArg("apiKey").orElseThrow(), apiKey))
             return ResponseEntity.status(HttpStatusCode.valueOf(401)).body("Invalid apiKey");
         
-        archiveService.backup(device, file);
+        archiveService.backup(file);
         return ResponseEntity.ok().build();
     }
 }
